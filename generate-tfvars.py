@@ -564,6 +564,8 @@ def main() -> None:
         backends["gitlab_pages"] = {"address": "production-gitlab-pages.pages.gitlab.gnome.org"}
     if "F_blogs_gnome_org" in all_vcl_content:
         backends["blogs_gnome_org"] = {"address": "blogs.gnome.org", "max_conn": 50}
+    if "F_gnome_os_download" in all_vcl_content:
+        backends["gnome_os_download"] = {"address": "gnome-os-download.apps.openshift.gnome.org"}
 
     tls_groups = build_tls_groups(all_domains)
     tls_sans_total = sum(len(v) for v in tls_groups.values())
