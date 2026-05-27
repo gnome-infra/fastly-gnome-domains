@@ -1,0 +1,21 @@
+[[pages]]
+domain = "blog.gtk.org"
+vcl_snippet = "blog-gtk"
+custom_vcl = """
+  set req.backend = F_blogs_gnome_org;
+  set req.http.X-Orig-Host = "blog.gtk.org";
+  set req.http.Host = "blogs.gnome.org";
+  set req.url = "/gtk" req.url;
+  return(pass);
+"""
+
+[[pages]]
+domain = "feborg.es"
+vcl_snippet = "feborg"
+custom_vcl = """
+  set req.backend = F_blogs_gnome_org;
+  set req.http.X-Orig-Host = "feborg.es";
+  set req.http.Host = "blogs.gnome.org";
+  set req.url = "/feborges" req.url;
+  return(pass);
+"""

@@ -1,0 +1,28 @@
+[[pages]]
+domain = "gnomeboxes.org"
+vcl_snippet = "gnomeboxes"
+custom_vcl = """
+  # Static assets go directly to apps.gnome.org
+  if (req.url ~ "^/assets/") {
+    set req.backend = F_gitlab_pages;
+    set req.http.X-Orig-Host = req.http.Host;
+    set req.http.Host = "apps.gnome.org";
+    return(pass);
+  }
+
+  # Locale-prefixed paths: /xx/... → apps.gnome.org/xx/Boxes/...
+  if (req.url ~ "^/([a-z]{2})(/.*)$") {
+    set req.backend = F_gitlab_pages;
+    set req.http.X-Orig-Host = req.http.Host;
+    set req.http.Host = "apps.gnome.org";
+    set req.url = "/" re.group.1 "/Boxes" re.group.2;
+    return(pass);
+  }
+
+  # Default: / → apps.gnome.org/Boxes/
+  set req.backend = F_gitlab_pages;
+  set req.http.X-Orig-Host = req.http.Host;
+  set req.http.Host = "apps.gnome.org";
+  set req.url = "/Boxes" req.url;
+  return(pass);
+"""
