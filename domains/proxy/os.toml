@@ -6,6 +6,6 @@ custom_vcl = """
   if (req.url ~ "^/download(/|$)") {
     set req.backend = F_gnome_os_download;
     set req.http.Host = "gnome-os-download.apps.openshift.gnome.org";
-    return(pass);
+    return(lookup);
   }
 """
