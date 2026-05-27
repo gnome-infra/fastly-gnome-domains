@@ -38,7 +38,7 @@ variable "vcl_snippets" {
 
 variable "backends" {
   description = "Map of backend name → config, populated by generate-tfvars.py based on which backends the VCL actually references"
-  type        = map(object({
+  type = map(object({
     address  = string
     max_conn = optional(number, 200)
   }))

@@ -37,14 +37,17 @@ jobs:
         with:
           terraform_version: 1.9.0
 
-      - name: Terraform Init
-        id: init
-        run: terraform init
-
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
         continue-on-error: true
+
+      - name: Generate tfvars and VCL
+        run: python3 generate-tfvars.py
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
 
       - name: Terraform Validate
         id: validate
