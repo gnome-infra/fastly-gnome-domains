@@ -1,0 +1,8 @@
+[[pages]]
+domain = "flatpak.org"
+vcl_snippet = "flatpak"
+custom_vcl = """
+  set req.backend = F_flatpak_origin;
+  set req.http.Host = "flatpak-origin.apps.openshift.gnome.org";
+  return(lookup);
+"""
