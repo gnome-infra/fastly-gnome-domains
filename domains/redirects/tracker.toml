@@ -1,0 +1,5 @@
+[[redirects]]
+domain = "tracker.gnome.org"
+target = "https://tracker.api.gnome.org"
+type = "permanent"
+preserve_path = true
