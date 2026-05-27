@@ -1,0 +1,40 @@
+[[pages]]
+domain = "help.gnome.org"
+origin = "https://teams.pages.gitlab.gnome.org/Websites/help.gnome.org/"
+vcl_snippet = "help"
+custom_vcl = """
+  # /users/<component>/ → /<component>/
+  if (req.url ~ "^/users/([^/]+)/$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/";
+  }
+
+  # /users/<component>/<version>/<file.html>[.<lang>] → /<component>/<file.html>
+  if (req.url ~ "^/users/([^/]+)/[^/]+/(.*\\.html)(?:\\..+)?$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/" re.group.2;
+  }
+
+  # /users/<component>/<version>/ → /<component>/
+  if (req.url ~ "^/users/([^/]+)/[^/]+/$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/";
+  }
+
+  # /admin/<component>/ → /<component>/
+  if (req.url ~ "^/admin/([^/]+)/$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/";
+  }
+
+  # /admin/<component>/<version>/<file.html>[.<lang>] → /<component>/<file.html>
+  if (req.url ~ "^/admin/([^/]+)/[^/]+/(.*\\.html)(?:\\..+)?$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/" re.group.2;
+  }
+
+  # /admin/<component>/<version>/ → /<component>/
+  if (req.url ~ "^/admin/([^/]+)/[^/]+/$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/";
+  }
+
+  # Strip language suffix from any .html.* file → .html
+  if (req.url ~ "^(.*\\.html)\\.[^/]+$") {
+    error 751 "https://help.gnome.org" re.group.1;
+  }
+"""

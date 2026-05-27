@@ -1,0 +1,8 @@
+[[redirects]]
+domain = "api.gnome.org"
+vcl_snippet = "api-gnome"
+custom_vcl = """
+  if (req.url ~ "^/evolution/(.*)$") {
+    error 751 "https://autoconfig.thunderbird.net/" re.group.1;
+  }
+"""

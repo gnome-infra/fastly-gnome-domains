@@ -1,0 +1,10 @@
+[[pages]]
+domain = "www.gnome.org"
+origin = "https://teams.pages.gitlab.gnome.org/Websites/www.gnome.org/"
+vcl_snippet = "wgo"
+
+[pages.path_redirects]
+"/donate" = "https://donate.gnome.org/"
+"/privacy" = "https://www.gnome.org/privacy-policy"
+"/getting-gnome/" = "https://www.gnome.org/#download"
+"/start/unstable/schedule.ics" = "https://release.gnome.org/calendar/schedule.ics"

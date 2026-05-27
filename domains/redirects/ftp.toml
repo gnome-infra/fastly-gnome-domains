@@ -1,0 +1,16 @@
+[[redirects]]
+domain = "ftp.gnome.org"
+target = "https://download.gnome.org"
+type = "permanent"
+vcl_snippet = "ftp"
+custom_vcl = """
+  if (req.url ~ "^/pub/[Gg][Nn][Oo][Mm][Ee]/(.*)$") {
+    error 751 "https://download.gnome.org/" re.group.1;
+  }
+"""
+
+[[redirects]]
+domain = "ftp.gtk.org"
+target = "https://download.gimp.org"
+type = "permanent"
+preserve_path = true

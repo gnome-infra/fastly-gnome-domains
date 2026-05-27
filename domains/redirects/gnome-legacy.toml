@@ -1,0 +1,92 @@
+# Legacy GNOME infrastructure domains — simple redirects
+
+[[redirects]]
+domain = "bugs.gnome.org"
+target = "https://gitlab.gnome.org"
+type = "permanent"
+preserve_path = true
+
+[[redirects]]
+domain = "src.gnome.org"
+target = "https://gitlab.gnome.org"
+type = "permanent"
+preserve_path = true
+
+[[redirects]]
+domain = "build.gnome.org"
+target = "https://nightly.gnome.org"
+type = "permanent"
+
+[[redirects]]
+domain = "chat.gnome.org"
+target = "https://foundation.gnome.org/2022/06/02/gnome-chat-moves-to-matrix"
+type = "permanent"
+
+[[redirects]]
+domain = "hedgedoc.gnome.org"
+target = "https://pad.gnome.org"
+type = "permanent"
+preserve_path = true
+
+[[redirects]]
+domain = "i18n.gnome.org"
+target = "https://wiki.gnome.org/TranslationProject"
+type = "permanent"
+
+[[redirects]]
+domains = ["idm01.gnome.org", "idm02.gnome.org"]
+target = "https://idm.gnome.org"
+type = "permanent"
+preserve_path = true
+
+[[redirects]]
+domain = "las.gnome.org"
+target = "https://linuxappsummit.org"
+type = "permanent"
+
+[[redirects]]
+domain = "library.gnome.org"
+target = "https://help.gnome.org"
+type = "permanent"
+
+[[redirects]]
+domain = "live.gnome.org"
+target = "https://wiki.gnome.org"
+type = "permanent"
+preserve_path = true
+
+[[redirects]]
+domain = "news.gnome.org"
+target = "https://www.gnome.org/news"
+type = "permanent"
+
+[[redirects]]
+domain = "nl.gnome.org"
+target = "https://wiki.gnome.org/GnomeNederlands"
+type = "permanent"
+
+[[redirects]]
+domain = "art.gnome.org"
+target = "https://wiki.gnome.org/Personalization"
+type = "permanent"
+
+[[redirects]]
+domains = ["gnome.io", "www.gnome.io"]
+target = "https://www.gnome.org"
+type = "permanent"
+
+[[redirects]]
+domains = ["torrent.gnome.org", "torrents.gnome.org"]
+target = "https://www.gnome.org/getting-gnome/"
+type = "permanent"
+
+[[redirects]]
+domains = ["outreachy.gnome.org", "opw.gnome.org"]
+target = "https://www.gnome.org"
+type = "permanent"
+
+[[redirects]]
+domain = "pygtk.gnome.org"
+target = "https://pygobject.readthedocs.io/en/latest"
+type = "permanent"
+preserve_path = false

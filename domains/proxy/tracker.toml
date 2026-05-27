@@ -1,0 +1,7 @@
+[[pages]]
+domain = "tracker.gnome.org"
+origin = "https://teams.pages.gitlab.gnome.org/Websites/tracker.gnome.org/"
+
+[[pages]]
+domain = "tracker.api.gnome.org"
+origin = "https://gnome.pages.gitlab.gnome.org/tinysparql/"

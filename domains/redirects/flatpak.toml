@@ -1,0 +1,5 @@
+[[redirects]]
+domain = "www.flatpak.org"
+target = "https://flatpak.org"
+type = "permanent"
+preserve_path = true

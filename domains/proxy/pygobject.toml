@@ -1,0 +1,7 @@
+[[pages]]
+domain = "pygobject.gnome.org"
+origin = "https://gnome.pages.gitlab.gnome.org/pygobject/"
+
+[[pages]]
+domain = "api.pygobject.gnome.org"
+origin = "https://gnome.pages.gitlab.gnome.org/pygobject-docs/"

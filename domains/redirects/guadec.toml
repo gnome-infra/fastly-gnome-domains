@@ -1,0 +1,57 @@
+[[redirects]]
+domains = ["2000.guadec.org", "2001.guadec.org", "2002.guadec.org"]
+target = "https://www.guadec.org/"
+type = "permanent"
+
+[[redirects]]
+domain = "2006.guadec.org"
+target = "https://wiki.gnome.org/GUADEC/2006"
+type = "permanent"
+
+[[redirects]]
+domain = "2007.guadec.org"
+target = "https://wiki.gnome.org/GUADEC/2007"
+type = "permanent"
+
+[[redirects]]
+domain = "2008.guadec.org"
+target = "https://wiki.gnome.org/GUADEC/2008"
+type = "permanent"
+
+[[redirects]]
+domain = "2009.guadec.org"
+target = "https://wiki.gnome.org/GUADEC/2009"
+type = "permanent"
+
+[[redirects]]
+domain = "2010.guadec.org"
+target = "https://wiki.gnome.org/GUADEC/2010"
+type = "permanent"
+
+[[redirects]]
+domain = "2011.guadec.org"
+target = "https://desktopsummit.org/"
+type = "permanent"
+
+[[redirects]]
+domain = "2012.guadec.org"
+target = "https://web.archive.org/web/20170125104744/http://2012.guadec.org/"
+type = "permanent"
+
+[[redirects]]
+domain = "2019.guadec.org"
+target = "https://events.gnome.org/event/11"
+type = "permanent"
+preserve_path = false
+
+[[redirects]]
+domain = "2020.guadec.org"
+target = "https://events.gnome.org/event/1"
+type = "permanent"
+preserve_path = false
+
+[[redirects]]
+domain = "2021.guadec.org"
+target = "https://events.gnome.org/event/9"
+type = "permanent"
+preserve_path = false

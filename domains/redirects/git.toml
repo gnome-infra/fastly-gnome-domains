@@ -1,0 +1,61 @@
+[[redirects]]
+domain = "git.gnome.org"
+vcl_snippet = "git"
+custom_vcl = """
+  # Specific file redirect
+  if (req.url == "/browse/jhbuild/plain/modulesets/gnome-world-3.14.modules") {
+    error 751 "https://gitlab.gnome.org/GNOME/jhbuild/raw/master/modulesets/gnome-world.modules";
+  }
+
+  # Archive namespace rewrites (must come before GNOME namespace)
+  if (req.url ~ "^/browse/archive/([^/]+)/log$") {
+    error 751 "https://gitlab.gnome.org/Archive/" re.group.1 "/commits/master";
+  }
+  if (req.url ~ "^/browse/archive/([^/]+)/tree(.*)") {
+    error 751 "https://gitlab.gnome.org/Archive/" re.group.1 "/tree/master" re.group.2;
+  }
+  if (req.url ~ "^/browse/archive/([^/]+)/plain(.*)") {
+    error 751 "https://gitlab.gnome.org/Archive/" re.group.1 "/raw/master" re.group.2;
+  }
+  if (req.url ~ "^/browse/archive/([^/]+)/([^/]+)$") {
+    error 751 "https://gitlab.gnome.org/Archive/" re.group.1 "/" re.group.2;
+  }
+  if (req.url ~ "^/browse/archive/([^/]+)$") {
+    error 751 "https://gitlab.gnome.org/Archive/" re.group.1;
+  }
+  if (req.url ~ "^/browse/archive/?$") {
+    error 751 "https://gitlab.gnome.org/Archive";
+  }
+
+  # GNOME namespace rewrites
+  if (req.url ~ "^/browse/?$") {
+    error 751 "https://gitlab.gnome.org/GNOME";
+  }
+  if (req.url ~ "^/browse/([^/]+)/log$") {
+    error 751 "https://gitlab.gnome.org/GNOME/" re.group.1 "/commits/master";
+  }
+  if (req.url ~ "^/browse/([^/]+)/tree(.*)") {
+    error 751 "https://gitlab.gnome.org/GNOME/" re.group.1 "/tree/master" re.group.2;
+  }
+  if (req.url ~ "^/browse/([^/]+)/plain(.*)") {
+    error 751 "https://gitlab.gnome.org/GNOME/" re.group.1 "/raw/master" re.group.2;
+  }
+  if (req.url ~ "^/browse/([^/]+)/([^/]+)$") {
+    error 751 "https://gitlab.gnome.org/GNOME/" re.group.1 "/" re.group.2;
+  }
+  if (req.url ~ "^/browse/([^/]+)$") {
+    error 751 "https://gitlab.gnome.org/GNOME/" re.group.1;
+  }
+
+  # /cgit/* → /browse/*
+  if (req.url ~ "^/cgit/(.*)") {
+    error 751 "https://git.gnome.org/browse/" re.group.1;
+  }
+
+  # Catch-all
+  if (req.url ~ "^/(.+)") {
+    error 751 "https://git.gnome.org/browse/" re.group.1;
+  }
+
+  error 751 "https://gitlab.gnome.org/GNOME";
+"""

@@ -1,0 +1,14 @@
+[[redirects]]
+domain = "people.gnome.org"
+vcl_snippet = "people"
+custom_vcl = """
+  if (req.url ~ "^/~mcatanzaro/(.*)\\.png$") {
+    error 751 "https://static.gnome.org/appdata/mcatanzaro-old/" re.group.1 ".png";
+  }
+  if (req.url ~ "^/~csaavedra(.*)") {
+    error 751 "https://blogs.igalia.com/csaavedra" re.group.1;
+  }
+  if (req.url ~ "^/~michael(.*)") {
+    error 751 "https://meeksfamily.uk/~michael" re.group.1;
+  }
+"""

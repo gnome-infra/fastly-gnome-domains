@@ -1,0 +1,11 @@
+[[pages]]
+domain = "os.gnome.org"
+origin = "https://teams.pages.gitlab.gnome.org/Releng/gnome-os-site/"
+vcl_snippet = "os"
+
+# NOTE: /download/ was previously proxied to an in-cluster Kubernetes service
+# (gnome-os-download.redirects.svc.cluster.local:8000). This cannot be served
+# from Fastly directly. Options:
+#   1. Expose the download service publicly and add it as a Fastly backend
+#   2. Keep a minimal origin-side proxy for this path
+#   3. Redirect /download/ to a public URL

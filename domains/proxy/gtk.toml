@@ -1,0 +1,23 @@
+[[pages]]
+domain = "gtk.org"
+aliases = ["www.gtk.org"]
+origin = "https://teams.pages.gitlab.gnome.org/Websites/www.gtk.org/"
+vcl_snippet = "gtk"
+custom_vcl = """
+  if (req.url ~ "^/api/2\\.6/gdk/") {
+    error 751 "https://developer.gnome.org/gdk2/";
+  }
+  if (req.url ~ "^/api/2\\.6/gtk/") {
+    error 751 "https://developer.gnome.org/gtk2/";
+  }
+  if (req.url ~ "^/api/2\\.6/$") {
+    error 751 "https://developer.gnome.org/gtk2/";
+  }
+  if (req.url ~ "^/api/2\\.6/(.+)") {
+    error 751 "https://developer.gnome.org/" re.group.1;
+  }
+"""
+
+[[pages]]
+domain = "docs.gtk.org"
+origin = "https://gnome.pages.gitlab.gnome.org/gtk/"

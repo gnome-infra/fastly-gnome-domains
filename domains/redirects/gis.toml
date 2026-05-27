@@ -1,0 +1,19 @@
+[[redirects]]
+domain = "gis.gnome.org"
+vcl_snippet = "gis"
+custom_vcl = """
+  if (req.url == "/services/v1/service.json") {
+    error 752 "https://static.gnome.org/gis.gnome.org/v1/service.json";
+  }
+
+  # Default: 302 temporary redirect to www.gnome.org
+  error 752 "https://www.gnome.org";
+"""
+custom_vcl_error = """
+  if (obj.status == 752) {
+    set obj.status = 302;
+    set obj.http.Location = obj.response;
+    synthetic {"<html><body>Redirecting...</body></html>"};
+    return(deliver);
+  }
+"""

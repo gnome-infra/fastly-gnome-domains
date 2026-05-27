@@ -1,0 +1,10 @@
+[[pages]]
+domain = "foundation.gnome.org"
+origin = "https://teams.pages.gitlab.gnome.org/Websites/foundation.gnome.org/"
+vcl_snippet = "foundation"
+custom_vcl = """
+  # /YYYY/MM/DD/* → blogs.gnome.org/foundation/YYYY/MM/DD/*
+  if (req.url ~ "^/\\d{4}/\\d{2}/\\d{2}/") {
+    error 751 "https://blogs.gnome.org/foundation" req.url;
+  }
+"""
