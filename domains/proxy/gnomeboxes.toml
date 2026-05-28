@@ -2,28 +2,20 @@
 domain = "gnomeboxes.org"
 vcl_snippet = "gnomeboxes"
 custom_vcl = """
-  # Static assets go directly to apps.gnome.org pages origin
-  if (req.url ~ "^/assets/") {
-    set req.backend = F_gitlab_pages;
-    set req.http.X-Orig-Host = req.http.Host;
-    set req.http.Host = "teams.pages.gitlab.gnome.org";
-    set req.url = "/Websites/apps.gnome.org" req.url;
-    return(lookup);
-  }
-
-  # Locale-prefixed paths: /xx/... → /Websites/apps.gnome.org/xx/Boxes/...
+  # Locale-prefixed paths: /xx/... → /xx/Boxes/...
   if (req.url ~ "^/([a-z]{2})(/.*)$") {
-    set req.backend = F_gitlab_pages;
-    set req.http.X-Orig-Host = req.http.Host;
-    set req.http.Host = "teams.pages.gitlab.gnome.org";
-    set req.url = "/Websites/apps.gnome.org/" re.group.1 "/Boxes" re.group.2;
-    return(lookup);
+    set req.url = "/" re.group.1 "/Boxes" re.group.2;
+    set req.http.Host = "apps.gnome.org";
+    return;
   }
 
-  # Default: / → /Websites/apps.gnome.org/Boxes/
-  set req.backend = F_gitlab_pages;
-  set req.http.X-Orig-Host = req.http.Host;
-  set req.http.Host = "teams.pages.gitlab.gnome.org";
-  set req.url = "/Websites/apps.gnome.org/Boxes" req.url;
-  return(lookup);
+  # Assets: pass through unchanged (apps.gnome.org uses same /assets/ path)
+  if (req.url ~ "^/assets/") {
+    set req.http.Host = "apps.gnome.org";
+    return;
+  }
+
+  # Default: / → /Boxes/
+  set req.url = "/Boxes" req.url;
+  set req.http.Host = "apps.gnome.org";
 """
