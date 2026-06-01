@@ -221,6 +221,16 @@ def generate_vcl(vc: VclConfig) -> str | None:
         lines.append(f"")
         for subpath, target_path in vc.subpath_proxies.items():
             escaped = _escape_vcl_regex(subpath)
+
+            # Redirect /path → /path/ so browsers compute base URL correctly
+            # and search engines see a single canonical URL.
+            if subpath.endswith("/"):
+                no_slash = subpath.rstrip("/")
+                escaped_no_slash = _escape_vcl_regex(no_slash)
+                lines.append(f'  if (req.url == "{no_slash}") {{')
+                lines.append(f'    error 751 "https://" req.http.Host "{subpath}";')
+                lines.append(f"  }}")
+
             lines.append(f'  if (req.url ~ "^{escaped}") {{')
             lines.append(f"    set req.backend = F_gitlab_pages;")
             lines.append(f'    set req.http.X-Orig-Host = req.http.Host;')
