@@ -1,0 +1,10 @@
+[[pages]]
+domain = "gimp.org"
+aliases = ["www.gimp.org", "gimp.net", "www.gimp.net"]
+vcl_snippet = "gimp"
+custom_vcl = """
+  set req.backend = F_gimp_origin;
+  set req.http.Host = "origin-www-gimp-org.apps.openshift.gnome.org";
+  set req.http.X-Force-TTL = "3600";
+  return(lookup);
+"""

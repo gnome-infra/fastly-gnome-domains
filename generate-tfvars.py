@@ -343,6 +343,12 @@ def generate_main_vcl(recv_snippets: list[str], error_snippets: list[str]) -> st
     lines.append("    );")
     lines.append("  }")
     lines.append("")
+    lines.append("  # Override cache TTL when X-Force-TTL is set in recv")
+    lines.append('  if (req.http.X-Force-TTL) {')
+    lines.append('    set beresp.ttl = std.atoi(req.http.X-Force-TTL);')
+    lines.append('    set beresp.http.Cache-Control = "public, max-age=" req.http.X-Force-TTL;')
+    lines.append("  }")
+    lines.append("")
     lines.append("  return(deliver);")
     lines.append("}")
     lines.append("")
@@ -454,11 +460,13 @@ def build_tls_groups(all_domains: list[str]) -> dict[str, list[str]]:
       - gnome_org: gnome.org apex + wildcards for subdomains
       - guadec_org: wildcard for *.guadec.org
       - gtk_org: wildcard for *.gtk.org
+      - gimp: gimp.org + gimp.net and their subdomains
       - other: remaining domains (wildcards if 2+ siblings share a parent)
     """
     gnome_org_domains: list[str] = []
     guadec_org_domains: list[str] = []
     gtk_org_domains: list[str] = []
+    gimp_domains: list[str] = []
     other_domains: list[str] = []
 
     for domain in all_domains:
@@ -468,6 +476,8 @@ def build_tls_groups(all_domains: list[str]) -> dict[str, list[str]]:
             guadec_org_domains.append(domain)
         elif domain == "gtk.org" or domain.endswith(".gtk.org"):
             gtk_org_domains.append(domain)
+        elif domain == "gimp.org" or domain.endswith(".gimp.org") or domain == "gimp.net" or domain.endswith(".gimp.net"):
+            gimp_domains.append(domain)
         else:
             other_domains.append(domain)
 
@@ -475,6 +485,7 @@ def build_tls_groups(all_domains: list[str]) -> dict[str, list[str]]:
         "gnome_org": _build_sans(gnome_org_domains),
         "guadec_org": _build_sans(guadec_org_domains),
         "gtk_org": _build_sans(gtk_org_domains),
+        "gimp": _build_sans(gimp_domains),
         "other": _build_sans(other_domains),
     }
 
@@ -578,6 +589,8 @@ def main() -> None:
         backends["flatpak_origin"] = {"address": "flatpak-origin.apps.openshift.gnome.org"}
     if "F_gnome_os_download" in all_vcl_content:
         backends["gnome_os_download"] = {"address": "gnome-os-download.apps.openshift.gnome.org"}
+    if "F_gimp_origin" in all_vcl_content:
+        backends["gimp_origin"] = {"address": "origin-www-gimp-org.apps.openshift.gnome.org"}
 
     tls_groups = build_tls_groups(all_domains)
     tls_sans_total = sum(len(v) for v in tls_groups.values())
