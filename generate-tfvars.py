@@ -480,7 +480,7 @@ def build_tls_groups(all_domains: list[str]) -> dict[str, list[str]]:
             guadec_org_domains.append(domain)
         elif domain == "gtk.org" or domain.endswith(".gtk.org"):
             gtk_org_domains.append(domain)
-        elif domain == "gimp.org" or domain.endswith(".gimp.org") or domain == "gimp.net" or domain.endswith(".gimp.net"):
+        elif domain == "gimp.org" or domain.endswith(".gimp.org") or domain == "gimp.net" or domain.endswith(".gimp.net") or domain == "gimp.info" or domain.endswith(".gimp.info"):
             gimp_domains.append(domain)
         else:
             other_domains.append(domain)

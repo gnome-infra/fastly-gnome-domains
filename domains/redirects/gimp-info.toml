@@ -1,0 +1,4 @@
+[[redirects]]
+domains = ["gimp.info", "www.gimp.info"]
+target = "https://www.gimp.org"
+type = "permanent"
