@@ -13,4 +13,15 @@ custom_vcl = """
     unset req.http.X-Forwarded-Host;
     return(lookup);
   }
+  if (req.url == "/system") {
+    error 751 "https://teams.gnome.org/system/";
+  }
+  if (req.url ~ "^/system/") {
+    set req.backend = F_gitlab_pages;
+    set req.http.X-Orig-Host = req.http.Host;
+    set req.http.Host = "general-52e411.pages.gitlab.gnome.org";
+    set req.url = "/" regsub(req.url, "^/system/", "");
+    unset req.http.X-Forwarded-Host;
+    return(lookup);
+  }
 """
