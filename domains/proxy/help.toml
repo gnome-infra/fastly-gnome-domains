@@ -44,7 +44,7 @@ custom_vcl = """
   }
 
   # Strip .en suffix from .html.en → .html
-  if (req.url ~ "^(.*\.html)\.en$") {
+  if (req.url ~ "^(.*\\.html)\\.en$") {
     error 751 "https://help.gnome.org" re.group.1;
   }
 """
