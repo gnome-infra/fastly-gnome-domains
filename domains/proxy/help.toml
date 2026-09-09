@@ -18,6 +18,11 @@ custom_vcl = """
     error 751 "https://help.gnome.org/" re.group.1 "/";
   }
 
+  # /users/<component>/<page> → /<component>/<page>
+  if (req.url ~ "^/users/([^/]+)/([^/]+)$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/" re.group.2;
+  }
+
   # /admin/<component>/ → /<component>/
   if (req.url ~ "^/admin/([^/]+)/$") {
     error 751 "https://help.gnome.org/" re.group.1 "/";
@@ -31,5 +36,15 @@ custom_vcl = """
   # /admin/<component>/<version>/ → /<component>/
   if (req.url ~ "^/admin/([^/]+)/[^/]+/$") {
     error 751 "https://help.gnome.org/" re.group.1 "/";
+  }
+
+  # /admin/<component>/<page> → /<component>/<page>
+  if (req.url ~ "^/admin/([^/]+)/([^/]+)$") {
+    error 751 "https://help.gnome.org/" re.group.1 "/" re.group.2;
+  }
+
+  # Strip .en suffix from .html.en → .html
+  if (req.url ~ "^(.*\.html)\.en$") {
+    error 751 "https://help.gnome.org" re.group.1;
   }
 """
