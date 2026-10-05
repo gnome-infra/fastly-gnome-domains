@@ -217,10 +217,21 @@ def generate_vcl(vc: VclConfig) -> str | None:
     lines.append(f"  }}")
 
     # 1. Subpath proxies (highest priority — route to different backends)
+    #    Values can be plain paths ("/Websites/foo/") which use the domain's
+    #    origin_host, or full origin URLs ("https://other.pages.gitlab.gnome.org/repo/")
+    #    which override the host.
     if vc.subpath_proxies:
         lines.append(f"")
-        for subpath, target_path in vc.subpath_proxies.items():
+        for subpath, target_value in vc.subpath_proxies.items():
             escaped = _escape_vcl_regex(subpath)
+
+            if not target_value.startswith("/"):
+                url = urlparse(target_value)
+                proxy_host = url.hostname or vc.origin_host
+                target_path = url.path.rstrip("/") + "/"
+            else:
+                proxy_host = vc.origin_host
+                target_path = target_value
 
             # Redirect /path → /path/ so browsers compute base URL correctly
             # and search engines see a single canonical URL.
@@ -234,10 +245,10 @@ def generate_vcl(vc: VclConfig) -> str | None:
             lines.append(f'  if (req.url ~ "^{escaped}") {{')
             lines.append(f"    set req.backend = F_gitlab_pages;")
             lines.append(f'    set req.http.X-Orig-Host = req.http.Host;')
-            lines.append(f'    set req.http.Host = "{vc.origin_host}";')
+            lines.append(f'    set req.http.Host = "{proxy_host}";')
             lines.append(f'    set req.url = "{target_path}" regsub(req.url, "^{escaped}", "");')
             lines.append(f"    unset req.http.X-Forwarded-Host;")
-            lines.append(f"    return(pass);")
+            lines.append(f"    return(lookup);")
             lines.append(f"  }}")
 
     # 2. Custom VCL (raw VCL for regex rewrites, synthetic triggers, etc.)
@@ -444,11 +455,13 @@ def validate(
                 errors.append(f"{vc.domain}: path_redirect key must start with /: {path}")
             if not target.startswith("http"):
                 errors.append(f"{vc.domain}: path_redirect target must be a URL: {target}")
-        for subpath, target_path in vc.subpath_proxies.items():
+        for subpath, target_value in vc.subpath_proxies.items():
             if not subpath.startswith("/"):
                 errors.append(f"{vc.domain}: subpath_proxy key must start with /: {subpath}")
-            if not target_path.startswith("/"):
-                errors.append(f"{vc.domain}: subpath_proxy target must start with /: {target_path}")
+            if not target_value.startswith("/"):
+                url = urlparse(target_value)
+                if not url.hostname:
+                    errors.append(f"{vc.domain}: subpath_proxy target must be a path or URL: {target_value}")
         if vc.default_redirect and not vc.default_redirect.startswith("http"):
             errors.append(f"{vc.domain}: default_redirect must be a URL: {vc.default_redirect}")
 

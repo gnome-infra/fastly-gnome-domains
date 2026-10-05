@@ -10,3 +10,6 @@ custom_vcl = """
     return(lookup);
   }
 """
+
+[pages.subpath_proxies]
+"/docs/" = "https://gnome.pages.gitlab.gnome.org/gnome-build-meta/docs/"

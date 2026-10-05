@@ -1,27 +1,7 @@
 [[pages]]
 domain = "teams.gnome.org"
 vcl_snippet = "teams"
-custom_vcl = """
-  if (req.url == "/platform") {
-    error 751 "https://teams.gnome.org/platform/";
-  }
-  if (req.url ~ "^/platform/") {
-    set req.backend = F_gitlab_pages;
-    set req.http.X-Orig-Host = req.http.Host;
-    set req.http.Host = "teams.pages.gitlab.gnome.org";
-    set req.url = "/Platform/General/" regsub(req.url, "^/platform/", "");
-    unset req.http.X-Forwarded-Host;
-    return(lookup);
-  }
-  if (req.url == "/system") {
-    error 751 "https://teams.gnome.org/system/";
-  }
-  if (req.url ~ "^/system/") {
-    set req.backend = F_gitlab_pages;
-    set req.http.X-Orig-Host = req.http.Host;
-    set req.http.Host = "general-52e411.pages.gitlab.gnome.org";
-    set req.url = "/" regsub(req.url, "^/system/", "");
-    unset req.http.X-Forwarded-Host;
-    return(lookup);
-  }
-"""
+
+[pages.subpath_proxies]
+"/platform/" = "https://teams.pages.gitlab.gnome.org/Platform/General/"
+"/system/" = "https://teams.pages.gitlab.gnome.org/System/General/"

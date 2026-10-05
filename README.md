@@ -53,6 +53,18 @@ custom_vcl = """
 "/docs/" = "/Websites/other-project/"
 ```
 
+Values can be a **path** (proxied via the domain's own `origin` host) or a
+**full URL** (proxied to a different GitLab Pages namespace):
+
+```toml
+[pages.subpath_proxies]
+# Same namespace — uses the domain's origin host
+"/hig/" = "/Websites/developer.gnome.org-hig/"
+
+# Cross-namespace — full URL overrides the host
+"/docs/" = "https://gnome.pages.gitlab.gnome.org/gnome-build-meta/docs/"
+```
+
 Fields are emitted in this order: `subpath_proxies` → `custom_vcl` → `path_redirects` → `default_redirect`.
 
 For synthetic responses (JSON endpoints, 302 redirects), add `custom_vcl_error`:
