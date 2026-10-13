@@ -1,6 +1,6 @@
 [[pages]]
 domain = "os.gnome.org"
-origin = "https://teams.pages.gitlab.gnome.org/Releng/gnome-os-site/"
+origin = "https://teams.pages.gitlab.gnome.org/Websites/os.gnome.org/"
 vcl_snippet = "os"
 custom_vcl = """
   if (req.url ~ "^/download(/|$)") {
