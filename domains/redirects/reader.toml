@@ -1,0 +1,5 @@
+[[redirects]]
+domain = "reader.gnome.org"
+target = "https://reader.gnome.io"
+type = "permanent"
+preserve_path = true
